@@ -1,5 +1,12 @@
 import { useState } from "react";
 
+const API_BASE_URL = import.meta.env.DEV
+  ? ""
+  : (
+      import.meta.env.VITE_API_BASE_URL ??
+      "https://createminiapps.onrender.com"
+    ).replace(/\/$/, "");
+
 function App() {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -10,9 +17,7 @@ function App() {
     setError("");
 
     try {
-      const response = await fetch(
-        "https://createminiapps.onrender.com/api/hello/"
-      );
+      const response = await fetch(`${API_BASE_URL}/api/hello/`);
 
       if (!response.ok) {
         throw new Error("Ошибка сервера");
