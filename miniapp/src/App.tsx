@@ -11,7 +11,7 @@ function App() {
 
     try {
       const response = await fetch(
-        "http://localhost:8000/api/hello/"
+        "https://createminiapps.onrender.com/api/hello/"
       );
 
       if (!response.ok) {
