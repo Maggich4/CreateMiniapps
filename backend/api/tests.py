@@ -1,5 +1,8 @@
+from unittest.mock import patch
+
 from django.test import TestCase
 
+from .catalog_data import PRODUCTS as FALLBACK_PRODUCTS
 from .models import Product
 
 
@@ -44,3 +47,15 @@ class ApiTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.json()), 6)
         self.assertEqual(response.json()[0]['category'], 'Керамика')
+
+    def test_products_uses_catalog_when_database_table_is_missing(self):
+        with patch(
+            'api.views.connection.introspection.table_names',
+            return_value=[],
+        ):
+            response = self.client.get('/api/products/')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.json()), len(FALLBACK_PRODUCTS))
+        self.assertEqual(response.json()[0]['id'], 1)
+        self.assertEqual(response.json()[0]['price'], 3290.0)
