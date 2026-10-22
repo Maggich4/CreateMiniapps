@@ -123,5 +123,6 @@ ALLOWED_HOSTS = [
     'localhost', 
     '127.0.0.1',
     'https://70f5f6ad.miniapp-cd3.pages.dev/?utm_source=chatgpt.com',
-    'https://main.miniapp-cd3.pages.dev/'
+    'https://main.miniapp-cd3.pages.dev/',
 ]
+CORS_ALLOW_ALL_ORIGINS = True
